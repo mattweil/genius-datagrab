@@ -4,7 +4,7 @@ genius-datagrab is a command line project written in Java that allows you to pul
 
 <h2>How to use</h2>
 | Command | Description | Usage |
-| --- | --- |
+| --- | --- | --- |
 | `artist` | Displays artist related information | artist -a travis scott |
 | `lyrics` | Displays lyrics of requested song | lyrics -s 90210 -a travis scott |
 | `help` | Displays a list of commands and their usage | help [command] |
