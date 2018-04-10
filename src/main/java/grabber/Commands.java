@@ -1,5 +1,6 @@
 package grabber;
 
+import api.Artist;
 import api.Genius;
 import api.Song;
 
@@ -7,6 +8,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class Commands {
+
+    public static void getDataforArtist(String artist) throws IOException {
+        Artist a = Genius.grabArtistData(artist);
+        System.out.println("Displaying data associated with the artist: " + artist);
+        System.out.println("Artist name: " + a.getName());
+        System.out.println("Artist aliases: " + a.getAliases());
+        //System.out.println("Songs released: " + a.getPrimarySongs());
+        //System.out.println("Songs featured on " + a.getSecondarySongs());
+    }
 
     public static void getSongsForArtist(String artist) throws IOException {
         System.out.println("Displaying songs associated with the artist: " + artist);
@@ -34,5 +44,10 @@ public class Commands {
         System.out.println("                                                                                              ");
         System.out.println("                                                                                              ");
         System.out.println("________________________________________________________________________________________________");
+    }
+
+    public static void setToken(String token){
+        Genius.accessToken = token;
+        System.out.println("Genius token set.");
     }
 }

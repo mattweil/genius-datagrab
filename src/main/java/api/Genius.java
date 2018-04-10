@@ -28,6 +28,11 @@ public class Genius {
         Artist a = new Artist();
         String artistID = grabArtistID(artist);
         String rawData = Request.get("artists/" + artistID);
+        String rawAlias = StringUtils.substringBetween(rawData, "alternate_names\":[\"", "],\"");
+        rawAlias = StringUtils.replace(rawAlias, "\"", "");
+        rawAlias = StringUtils.replace(rawAlias, ",", ", ");
+        a.setName("test");
+        a.setAliases(rawAlias);
         System.out.println(rawData);
         return a;
     }
@@ -54,23 +59,23 @@ public class Genius {
         return songList;
     }
 
-    public static void grabLyrics(String song, String artist) throws IOException {
+    public static void grabLyrics(String song) throws IOException {
         ArrayList<String> songLyrics = new ArrayList<String>();
         ArrayList<String> responses = new ArrayList<String>();
-        String artistID = grabArtistID(artist);
+        //String artistID = grabArtistID(artist);
         song = StringUtils.replace(song, "\'", "").toLowerCase();
-        String url = "search?q=" + song + " " + artist;
+        String url = "search?q=" + song + " ";
         String link = StringUtils.replace(url, " ", "%20");
         String rawData = Request.get(link);
         String searchResponse[] = StringUtils.substringsBetween(rawData, "{\"highlight", "}}}");
 
         for (String response : searchResponse) {
-            if (response.contains("\"type\":\"song\"") && response.contains(artistID)) {
+            if (response.contains("\"type\":\"song\"")) {
                 responses.add(StringUtils.substringBetween(response, "\"stats\":", "primary_artist"));
             }
         }
-
         HtmlUnitDriver driver = new HtmlUnitDriver();
+
         driver.get(StringUtils.substringBetween(searchResponse[0], "\"url\":\"", "\""));
 
 
