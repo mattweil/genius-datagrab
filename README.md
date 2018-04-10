@@ -6,6 +6,7 @@ genius-datagrab is a command line project written in Java that allows you to pul
 
 genius-datagrab is fueled by Genius' API which requires an authorization token that can be obtained [here](http://genius.com/api-clients). Once an authorization token is supplied, you're all set!
 
+
 | Command | Description | Usage
 | --- | --- | ---
 | `artist` | Displays artist related information | artist -a [artist]
