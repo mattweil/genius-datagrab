@@ -4,6 +4,8 @@ genius-datagrab is a command line project written in Java that allows you to pul
 
 <h2>How to use</h2>
 
+genius-datagrab is fueled by Genius' API which requires an authorization token that can be obtained [here](http://genius.com/api-clients).
+
 | Command | Description | Usage
 | --- | --- | ---
 | `artist` | Displays artist related information | artist -a travis scott 
