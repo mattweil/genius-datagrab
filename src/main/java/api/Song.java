@@ -3,6 +3,8 @@ package api;
 public class Song {
     String songTitle;
     String primaryArtist;
+    
+
 
     public String getSongTitle() {
         return songTitle;

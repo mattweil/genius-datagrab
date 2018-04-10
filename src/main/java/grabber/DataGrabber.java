@@ -3,11 +3,13 @@ package grabber;
 
 import api.Genius;
 import api.Song;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
 
 public class DataGrabber {
 
@@ -15,25 +17,42 @@ public class DataGrabber {
     public static List<String> artists;
 
     public static void main(String[] args) throws IOException {
-        Scanner reader = new Scanner(System.in);
         System.out.println("Welcome to genius-datagrab!");
-        System.out.println("You can begin by enter a command, type 'help' for more information.");
+        System.out.println("You can begin by entering a command, type 'help' for more information.");
+        waitForCommand();
+
+
+    }
+
+    public static void waitForCommand() throws IOException {
+        Scanner reader = new Scanner(System.in);
         System.out.print("gdg> ");
         String command = reader.nextLine().toLowerCase();
 
         if (command.startsWith("songs ")) {
+            String artist = StringUtils.substringAfter(command,"-a ");
+            Commands.getSongsForArtist(artist);
+            waitForCommand();
+        }
+
+        else if (command.startsWith("help")) {
+            Commands.sendHelp();
+            waitForCommand();
+
+
+        }
+
+        else if(command.startsWith("artist ")){
             String artist = command.substring(command.indexOf(" ") + 1 , command.length());
-            System.out.println(artist);
-            ArrayList<Song> songList = Genius.getSongs(artist);
-            System.out.println("------------------------------------------------------------------------------------------------");
-            System.out.print(String.format("%-65s", "| Song"));
-            System.out.println(String.format("%-10s", "| Primary Artist"));
-            System.out.println("------------------------------------------------------------------------------------------------");
-            for (Song s: songList) {
-                String padded = String.format("%-65s", s.getSongTitle());
-                System.out.print(padded);
-                System.out.println("| " + String.format("%-25s", s.getPrimaryArtist()) + "|");
-            }
+            Genius.grabArtistData(artist);
+            waitForCommand();
+        }
+
+        else if(command.startsWith("lyrics " ) && command.contains("-s ") && command.contains(" -a ")){
+            String song = StringUtils.substringBetween(command, "-s ", " -a");
+            String artist = StringUtils.substringAfter(command,"-a ");
+            Genius.grabLyrics(song, artist);
+            waitForCommand();
         }
 
     }
